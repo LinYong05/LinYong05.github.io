@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>vue之HTML转为PDF并预览的实现与踩坑过程 | 番茄の博客 | 利器完不成的工作，钝器常能派上用场。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="vue,JS">
+    <meta name="description" content="vue之HTML转为PDF并预览的实现与踩坑过程前言产品的话能不听吗？产品：”我觉得我们的后台需要一份导出功能，普通的word、excel导出不适用，导出来的数据容易误操作，还容易被修改。不理想,我就需要一份PDF导出格式,你们去实现一下。。。” 好吧，产品的话只能听啊，那就去实现吧。虽然平时没做过PDF导出，但至少也还在度娘在啊。搜索一番并历经几个小坑，终于是实现较理想的状态。以下听我来细细讲解">
+<meta name="keywords" content="vue,JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue之HTML转为PDF并预览的实现与踩坑过程">
+<meta property="og:url" content="https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/index.html">
+<meta property="og:site_name" content="番茄の博客">
+<meta property="og:description" content="vue之HTML转为PDF并预览的实现与踩坑过程前言产品的话能不听吗？产品：”我觉得我们的后台需要一份导出功能，普通的word、excel导出不适用，导出来的数据容易误操作，还容易被修改。不理想,我就需要一份PDF导出格式,你们去实现一下。。。” 好吧，产品的话只能听啊，那就去实现吧。虽然平时没做过PDF导出，但至少也还在度娘在啊。搜索一番并历经几个小坑，终于是实现较理想的状态。以下听我来细细讲解">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/npmi.png">
+<meta property="og:image" content="https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/download.png">
+<meta property="og:image" content="https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/html2canvas.png">
+<meta property="og:image" content="https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/html2canvas2.png">
+<meta property="og:updated_time" content="2018-04-26T08:32:35.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue之HTML转为PDF并预览的实现与踩坑过程">
+<meta name="twitter:description" content="vue之HTML转为PDF并预览的实现与踩坑过程前言产品的话能不听吗？产品：”我觉得我们的后台需要一份导出功能，普通的word、excel导出不适用，导出来的数据容易误操作，还容易被修改。不理想,我就需要一份PDF导出格式,你们去实现一下。。。” 好吧，产品的话只能听啊，那就去实现吧。虽然平时没做过PDF导出，但至少也还在度娘在啊。搜索一番并历经几个小坑，终于是实现较理想的状态。以下听我来细细讲解">
+<meta name="twitter:image" content="https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/npmi.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="番茄の博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">LinYong05</h5>
+          <a href="mailto:715407669@qq.com" title="715407669@qq.com" class="mail">715407669@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/LinYong05" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2831334664" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                微博
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/aboutme"  >
+                <i class="icon icon-lg icon-id-badge"></i>
+                关于我
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vue之HTML转为PDF并预览的实现与踩坑过程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">vue之HTML转为PDF并预览的实现与踩坑过程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-23T09:29:12.000Z" itemprop="datePublished" class="page-time">
+  2018-04-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/方法/">方法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#vue之HTML转为PDF并预览的实现与踩坑过程"><span class="post-toc-number">1.</span> <span class="post-toc-text">vue之HTML转为PDF并预览的实现与踩坑过程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#准备材料"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">准备材料</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第一步，引用"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">第一步，引用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第二步，写页面布局（即需要打印的页面）"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">第二步，写页面布局（即需要打印的页面）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第三步，写按钮方法"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">第三步，写按钮方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#爬坑"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">爬坑</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#vue之HTML转为PDF第二种方法-跳过预览下载PDF"><span class="post-toc-number">2.</span> <span class="post-toc-text">vue之HTML转为PDF第二种方法(跳过预览下载PDF)</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-vue之HTML转为PDF并预览的实现与踩坑过程"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vue之HTML转为PDF并预览的实现与踩坑过程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-23 17:29:12" datetime="2018-04-23T09:29:12.000Z"  itemprop="datePublished">2018-04-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/方法/">方法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="vue之HTML转为PDF并预览的实现与踩坑过程"><a href="#vue之HTML转为PDF并预览的实现与踩坑过程" class="headerlink" title="vue之HTML转为PDF并预览的实现与踩坑过程"></a>vue之HTML转为PDF并预览的实现与踩坑过程</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>产品的话能不听吗？产品：”我觉得我们的后台需要一份导出功能，普通的word、excel导出不适用，导出来的数据容易误操作，还容易被修改。不理想,我就需要一份PDF导出格式,你们去实现一下。。。”</p>
+<p>好吧，产品的话只能听啊，那就去实现吧。虽然平时没做过PDF导出，但至少也还在度娘在啊。搜索一番并历经几个小坑，终于是实现较理想的状态。以下听我来细细讲解一番。此次分享以VUE项目为主，也许网上也有很多的教程，但是自己亲身经历的还是有意义的。</p>
+<h2 id="准备材料"><a href="#准备材料" class="headerlink" title="准备材料"></a>准备材料</h2><ol>
+<li><code>jspdf</code>  项目地址：<a href="https://github.com/MrRio/jsPDF" target="_blank" rel="noopener">https://github.com/MrRio/jsPDF</a></li>
+<li><code>html2canvas</code> 项目地址：<a href="https://github.com/niklasvh/html2canvas" target="_blank" rel="noopener">https://github.com/niklasvh/html2canvas</a></li>
+</ol>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p><code>jspdf</code> 直接在命令行中运行npm install jspdf –save</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/npmi.png" alt="命令行中运行" title="">
+                </div>
+                <div class="image-caption">命令行中运行</div>
+            </figure>
+<blockquote>
+<p><code>html2canvas</code> 不要用Github文档的npm安装的方式，直接下载文件放入文件夹。如图：</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/download.png" alt="下载入口" title="">
+                </div>
+                <div class="image-caption">下载入口</div>
+            </figure>
+<ul>
+<li>Github文档有npm安装的方式,不过安装下来是5.0以上版本的预发行版本（这也是我没注意遇到的大坑，版本下载错了，以下方法都实现不了哦），所以不要直接用，我们去下载最新发布的版本0.4.1。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/html2canvas.png" alt="最新版本" title="">
+                </div>
+                <div class="image-caption">最新版本</div>
+            </figure>
+<ul>
+<li>将下载完的html2canvas.js放在项目的指定位置中供后面使用来调用，这个位置可根据你的项目自行选择,下图是我所放的位置。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/html2canvas2.png" alt="放到项目指定位置" title="">
+                </div>
+                <div class="image-caption">放到项目指定位置</div>
+            </figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>HTML转为PDF并预览的方法其实有很多很多，我介绍的这个HTML转为PDF并预览主要针对转换需求少的，不能实现批量，目前我是没看到有啥可以实现批量转换的，有好的方法也希望大家告知，我的实现过程主要是，打开需要转为PDF的页面，然后再点击转为PDF的按钮，通过ifranme展示转换好的PDF，用户可以通过当前的页面自行选择是否需要下载PDF。</p>
+<h3 id="第一步，引用"><a href="#第一步，引用" class="headerlink" title="第一步，引用"></a>第一步，引用</h3><ul>
+<li>需要转为PDF的页面的<code>script</code>中引用</li>
+</ul>
+<blockquote>
+<p>import jsPDF from ‘jspdf’<br>  import html2canvas from ‘../../../assets/js/html2canvas.js’</p>
+</blockquote>
+<h3 id="第二步，写页面布局（即需要打印的页面）"><a href="#第二步，写页面布局（即需要打印的页面）" class="headerlink" title="第二步，写页面布局（即需要打印的页面）"></a>第二步，写页面布局（即需要打印的页面）</h3><ul>
+<li>页面上需要一个布局作为转换页面的模板，还需要一个iframe来展示转换后的PDF预览结果，期间转换后通过隐藏模板显示预览来完成。在<code>template</code>内的基本布局如下。</li>
+</ul>
+<blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-show</span>=<span class="string">"!pdfShow"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"LoadPDF"</span>&gt;</span>预览PDF<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"pdfdiv"</span> <span class="attr">class</span>=<span class="string">"pdfbg"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>我是需要打印的内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://img.alicdn.com/bao/uploaded/TB1qimQIpXXXXXbXFXXSutbFXXX.jpg"</span> <span class="attr">width</span>=<span class="string">"100"</span> <span class="attr">height</span>=<span class="string">"auto"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">id</span>=<span class="string">"iframe"</span> <span class="attr">scrolpng</span>=<span class="string">"no"</span> <span class="attr">frameborder</span>=<span class="string">"0"</span> <span class="attr">v-show</span>=<span class="string">"pdfShow"</span> <span class="attr">width</span>=<span class="string">"100%"</span> <span class="attr">height</span>=<span class="string">"auto"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="第三步，写按钮方法"><a href="#第三步，写按钮方法" class="headerlink" title="第三步，写按钮方法"></a>第三步，写按钮方法</h3><ul>
+<li><p>因为需要显示隐藏控制，我们需要双向绑定一个<code>pdfShow</code>,然后写一个按钮的点击事件<code>LoadPDF()</code>。</p>
+</li>
+<li><p><code>data()</code>中<code>return</code>一个<code>pdfShow</code>，默认不显示PDF：</p>
+</li>
+</ul>
+<blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        pdfShow: <span class="literal">false</span> <span class="comment">//默认不显示PDF预览ifranme</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li><code>methods</code>中添加一个<code>LoadPDF()</code>为按钮的点击事件：</li>
+</ul>
+<blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">    LoadPDF() &#123;</span><br><span class="line">        <span class="keyword">var</span> pdf = <span class="keyword">new</span> jsPDF();</span><br><span class="line">        pdf.internal.scaleFactor = <span class="number">8</span>; <span class="comment">//可以调整缩放比例</span></span><br><span class="line">        <span class="keyword">var</span> options = &#123;</span><br><span class="line">            pagesplit: <span class="literal">true</span>, <span class="comment">//分页</span></span><br><span class="line">            <span class="string">"background"</span>: <span class="string">'#FFFFFF'</span> <span class="comment">//设置背景色</span></span><br><span class="line">        &#125;;</span><br><span class="line">        pdf.addHTML(<span class="built_in">document</span>.querySelector(<span class="string">'#pdfdiv'</span>), options, () =&gt; &#123;</span><br><span class="line">            pdf.setProperties(&#123;</span><br><span class="line">                title: <span class="string">'PDF预览'</span> <span class="comment">//设置PDF标题</span></span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"iframe"</span>).src = pdf.output(<span class="string">'datauristring'</span>); <span class="comment">//在iframe中显示</span></span><br><span class="line">            <span class="keyword">this</span>.pdfShow = <span class="literal">true</span> <span class="comment">//显示PDF预览</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>到此其实基本上已经实现了PDF预览功能了，但是呢，还是有些小坑的，就比如你完完全全的按我这个步骤做下来是绝对会遇到坑的。接下来我就来介绍下所遇到的坑并如何爬过这些坑。</li>
+</ul>
+<h2 id="爬坑"><a href="#爬坑" class="headerlink" title="爬坑"></a>爬坑</h2><p>此方法坑有三处</p>
+<blockquote>
+<ul>
+<li>1.生成PDF可能会出现可能会出现黑色区域一大片。实际PDF转换是成功的，原因在于你的页面要转换区域没有背景样式，需要加个白色背景，如我的<code>class</code>名为<code>pdfbg</code>,设置为:<code>background:&quot;#FFFFFF&quot;;</code></li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>2.可能生成的PDF位置偏移或者文字变形，那是由于项目设置的单位不同，可以先尝试修改<code>pdf.internal.scaleFactor = 8;</code>调整缩放比例来调整到最佳显示。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>3.页面中存在图片转换不显示图片的问题，原因是网络图片存在跨域等问题，解决方案是将图片转换为base64即可。通过修改<code>img</code>中的图片地址的<code>&lt;img :src=&quot;FormatImg(https://img.alicdn.com/bao/uploaded/TB1qimQIpXXXXXbXFXXSutbFXXX.jpg)&quot; width=&quot;100&quot; height=&quot;auto&quot;&gt;</code>传入<code>FormatImg(url)</code>即可(vue中需要用到<code>:src</code>绑定)。方法以下贴出（这是针对单张图片的方法，可自行修改多张）：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">    getBase64Image(img) &#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">"canvas"</span>);</span><br><span class="line">        canvas.width = img.width;</span><br><span class="line">        canvas.height = img.height;</span><br><span class="line">        <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        ctx.drawImage(img, <span class="number">0</span>, <span class="number">0</span>, img.width, img.height);</span><br><span class="line">        <span class="keyword">var</span> ext = img.src.substring(img.src.lastIndexOf(<span class="string">"."</span>) + <span class="number">1</span>).toLowerCase();</span><br><span class="line">        <span class="keyword">var</span> dataURL = canvas.toDataURL(<span class="string">"image/"</span> + ext);</span><br><span class="line">        <span class="keyword">return</span> dataURL;</span><br><span class="line">    &#125;,</span><br><span class="line">    FormatImg(url) &#123;</span><br><span class="line">        <span class="keyword">let</span> _this = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">var</span> img = url</span><br><span class="line">        <span class="keyword">var</span> image = <span class="keyword">new</span> Image();</span><br><span class="line">        image.crossOrigin = <span class="string">''</span>;</span><br><span class="line">        image.src = img;</span><br><span class="line">        image.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            _this.baseimg = _this.getBase64Image(image);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> _this.baseimg</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h1 id="vue之HTML转为PDF第二种方法-跳过预览下载PDF"><a href="#vue之HTML转为PDF第二种方法-跳过预览下载PDF" class="headerlink" title="vue之HTML转为PDF第二种方法(跳过预览下载PDF)"></a>vue之HTML转为PDF第二种方法(跳过预览下载PDF)</h1><p>第二种方法我也是网上看到的，只是小试了下，其实原理差不多，具体的不详细介绍，也并未认真的去修改配置。这里也贴出代码，有需要的自己试下。</p>
+<ol>
+<li><code>jspdf</code>  项目地址：<a href="https://github.com/MrRio/jsPDF" target="_blank" rel="noopener">https://github.com/MrRio/jsPDF</a></li>
+<li><code>html2canvas</code> 项目地址：<a href="https://github.com/niklasvh/html2canvas" target="_blank" rel="noopener">https://github.com/niklasvh/html2canvas</a></li>
+</ol>
+<blockquote>
+<p><code>jspdf</code> 直接在命令行中运行npm install jspdf –save<br><code>html2canvas</code> 这个方法试用的版本是<code>v0.5.0-beta4</code>，下载方法前面有介绍。别下载错了哦。</p>
+</blockquote>
+<p>代码方法如下（其他问题可前后结合试试，我就不试啦。）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">    LoadPDF() &#123;</span><br><span class="line">        <span class="keyword">var</span> target = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"pdfbg"</span>)[<span class="number">0</span>]; <span class="comment">//需要打印的区域</span></span><br><span class="line">        target.style.background = <span class="string">"#FFFFFF"</span>;   <span class="comment">//设置背景色，已设置可跳过</span></span><br><span class="line">        html2canvas(target, &#123;</span><br><span class="line">            onrendered:<span class="function"><span class="keyword">function</span>(<span class="params">canvas</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> contentWidth = canvas.width;</span><br><span class="line">            <span class="keyword">var</span> contentHeight = canvas.height;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//一页pdf显示html页面生成的canvas高度;</span></span><br><span class="line">            <span class="keyword">var</span> pageHeight = contentWidth / <span class="number">592.28</span> * <span class="number">841.89</span>;</span><br><span class="line">            <span class="comment">//未生成pdf的html页面高度</span></span><br><span class="line">            <span class="keyword">var</span> leftHeight = contentHeight;</span><br><span class="line">            <span class="comment">//页面偏移</span></span><br><span class="line">            <span class="keyword">var</span> position = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高</span></span><br><span class="line">            <span class="keyword">var</span> imgWidth = <span class="number">595.28</span>;</span><br><span class="line">            <span class="keyword">var</span> imgHeight = <span class="number">592.28</span>/contentWidth * contentHeight;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> pageData = canvas.toDataURL(<span class="string">'image/jpeg'</span>, <span class="number">1.0</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> pdf = <span class="keyword">new</span> jsPDF(<span class="string">''</span>, <span class="string">'pt'</span>, <span class="string">'a4'</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)</span></span><br><span class="line">            <span class="comment">//当内容未超过pdf一页显示的范围，无需分页</span></span><br><span class="line">            <span class="keyword">if</span> (leftHeight &lt; pageHeight) &#123;</span><br><span class="line">            pdf.addImage(pageData, <span class="string">'JPEG'</span>, <span class="number">0</span>, <span class="number">0</span>, imgWidth, imgHeight );</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span>(leftHeight &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    pdf.addImage(pageData, <span class="string">'JPEG'</span>, <span class="number">0</span>, position, imgWidth, imgHeight)</span><br><span class="line">                    leftHeight -= pageHeight;</span><br><span class="line">                    position -= <span class="number">841.89</span>;</span><br><span class="line">                    <span class="comment">//避免添加空白页</span></span><br><span class="line">                    <span class="keyword">if</span>(leftHeight &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                      pdf.addPage();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            pdf.save(<span class="string">"save.pdf"</span>); <span class="comment">//保存PDF</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HTML转PDF，总体来说，我觉得只适合页面内容较少的，过多了效果并不是很理想，也许是我的方式不对吧。如果有其他方法或者不对的地方，欢迎留言指教。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-26T08:32:35.371Z" itemprop="dateUpdated">2018-04-26 16:32:35</time>
+</span><br>
+
+
+        
+        此文发自 <a href="https://linyong05.github.io/" target="_blank">番茄の博客</a>，请尊重作者的劳动成果，转发复制请注明出处。<br/>原文：<a href="/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/" target="_blank" rel="external">https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://linyong05.github.io">
+            <img src="/img/avatar.jpg" alt="LinYong05">
+            LinYong05
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/&title=《vue之HTML转为PDF并预览的实现与踩坑过程》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/&title=《vue之HTML转为PDF并预览的实现与踩坑过程》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue之HTML转为PDF并预览的实现与踩坑过程》 — 番茄の博客&url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/05/07/vue之axios的简单封装及使用/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">vue之axios的简单封装及使用</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/18/TomatoMusic/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Tomato Music——移动端音乐 WebApp</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "lrTitNhEVw1eTYmwd298K65A-gzGzoHsz",
+            appKey: "DsKbKSON9Ut0Q2xeoEQ8TMhv",
+            avatar: "wavatar",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+                <a href="/aboutme" title="关于我" style="border-bottom:none">
+                    <i class="icon icon-2x icon-star"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://github.com/LinYong05" target="_blank" title="Github" style="border-bottom:none">
+                    <i class="icon icon-2x icon-github"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://weibo.com/u/2831334664" target="_blank"  title="Weibo" style="border-bottom:none">
+                    <i class="icon icon-2x icon-weibo"></i>
+                </a>
+            </span>
+        </p>
+    </div>
+    <div class="bottom">
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/&title=《vue之HTML转为PDF并预览的实现与踩坑过程》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/&title=《vue之HTML转为PDF并预览的实现与踩坑过程》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue之HTML转为PDF并预览的实现与踩坑过程》 — 番茄の博客&url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADF0lEQVR42u3aS7LiQAwEQO5/aeYCz0xVy0SASK8Ih3/Zm0JSPx7x8bw4rq68uvf1mat35U+++cDGxsb+Evbz5ZF8enJv/rlnT8st2NjY2FvZr6OojaX5Uraw3IKNjY2N/TpskqVpa4TkSmxsbGzsnJ0sQd4eShYOGxsbGzthT/7iT+6atJnacggbGxt7Kzufin7+77fMt7GxsbE/mP0sj7NCJQ+qtoA5VGBjY2MvYk9a9pO/+O29+aC3eCM2Njb2Cna7RaZlnDX3376s2NjY2OvYeYP+7HPv3daTPCeah2BjY2OvY09iqW39tAuag6PBBjY2NvY6dnHDTe2h5I359W0JhI2Njb2J3T56fuU86pLQjc5jY2Njr2PXATAuXe6iHn4zNjY29gr2XY3++TaaInjikumyRYWNjY29iN1G2lnzqB3uJiPb5AmPswTGxsbG/kL2WZumbuIMSoi3fAM2Njb2Cnbevp9nYz4YOPue4npsbGzsH2O/Lgba5WiLk/lmoD/OY2NjYy9inw1x2y2Pk/bQJMywsbGxf4GdPKjdTN+GWRKcZ2OMqKmEjY2NvYLdhsdZzNxVxuSBerkQ2NjY2OvYbflx9sq7Fivf0HP5FmxsbOx17LZJlPPO2kBJeZN88+XbsbGxsZey89bMfCibLOJZ26sYD2BjY2MvYp+NUfOlyYfE+fLlJc0fV2JjY2OvY+cbK9tSpC1aJruNinYVNjY29jp220hKQmKyfScHt+frqTU2Njb2x7PbMqMdtbYNqXtHvP+JRmxsbOzV7La11A5uzyKtLUjq9MbGxsb+cnYSA3VIvHxXsojt8LjYNoSNjY29lH0WD/nvsxFyO66ImlPY2NjYK9jP8pgEybxp1YZisWUHGxsb+2vZZwHQbtls20Nn7HyogI2Njb2P3Q5Qc2TSQkqQ+VA5D0tsbGzsfexJOTEZD7ebckb9s3a+jY2Njb2U3VY5+XC3HfeefSE2NjY29rxgmARPG2nY2NjYv8NuGzdtXJ21lpKCpB1XYGNjY+9jt1tw5i9LFuXeMfBovo2NjY39uex/Jie5Nao3pfIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

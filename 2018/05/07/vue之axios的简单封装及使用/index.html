@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>vue之axios的简单封装及使用 | 番茄の博客 | 利器完不成的工作，钝器常能派上用场。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="vue,axios">
+    <meta name="description" content="vue之axios的简单封装及使用前言vue更新到2.0之后，作者就宣告不再对vue-resource更新，而是推荐的axios,axios和其他的ajax库都是很类似的，提供了2种使用的方式,都可以简单的调用。其实网上及官方都有很多说明及例子，也很简单的就能学习到如何运用，这里我就不一一说明了。我这里主要记录一个参考了很多的例子及自己常用的封装方法。 引入方式 axios 主要针对vue脚手架搭">
+<meta name="keywords" content="vue,axios">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue之axios的简单封装及使用">
+<meta property="og:url" content="https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/index.html">
+<meta property="og:site_name" content="番茄の博客">
+<meta property="og:description" content="vue之axios的简单封装及使用前言vue更新到2.0之后，作者就宣告不再对vue-resource更新，而是推荐的axios,axios和其他的ajax库都是很类似的，提供了2种使用的方式,都可以简单的调用。其实网上及官方都有很多说明及例子，也很简单的就能学习到如何运用，这里我就不一一说明了。我这里主要记录一个参考了很多的例子及自己常用的封装方法。 引入方式 axios 主要针对vue脚手架搭">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/axios.png">
+<meta property="og:updated_time" content="2018-05-07T07:33:26.394Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue之axios的简单封装及使用">
+<meta name="twitter:description" content="vue之axios的简单封装及使用前言vue更新到2.0之后，作者就宣告不再对vue-resource更新，而是推荐的axios,axios和其他的ajax库都是很类似的，提供了2种使用的方式,都可以简单的调用。其实网上及官方都有很多说明及例子，也很简单的就能学习到如何运用，这里我就不一一说明了。我这里主要记录一个参考了很多的例子及自己常用的封装方法。 引入方式 axios 主要针对vue脚手架搭">
+<meta name="twitter:image" content="https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/axios.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="番茄の博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">LinYong05</h5>
+          <a href="mailto:715407669@qq.com" title="715407669@qq.com" class="mail">715407669@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/LinYong05" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2831334664" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                微博
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/aboutme"  >
+                <i class="icon icon-lg icon-id-badge"></i>
+                关于我
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vue之axios的简单封装及使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">vue之axios的简单封装及使用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-05-07T06:46:40.000Z" itemprop="datePublished" class="page-time">
+  2018-05-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/方法/">方法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#vue之axios的简单封装及使用"><span class="post-toc-number">1.</span> <span class="post-toc-text">vue之axios的简单封装及使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引入方式"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">引入方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目录结构"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">目录结构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置详情"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">配置详情</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用方法"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">使用方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">总结</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-vue之axios的简单封装及使用"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vue之axios的简单封装及使用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-05-07 14:46:40" datetime="2018-05-07T06:46:40.000Z"  itemprop="datePublished">2018-05-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/方法/">方法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="vue之axios的简单封装及使用"><a href="#vue之axios的简单封装及使用" class="headerlink" title="vue之axios的简单封装及使用"></a>vue之axios的简单封装及使用</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>vue更新到2.0之后，作者就宣告不再对vue-resource更新，而是推荐的axios,axios和其他的ajax库都是很类似的，提供了2种使用的方式,都可以简单的调用。其实网上及官方都有很多说明及例子，也很简单的就能学习到如何运用，这里我就不一一说明了。我这里主要记录一个参考了很多的例子及自己常用的封装方法。</p>
+<h2 id="引入方式"><a href="#引入方式" class="headerlink" title="引入方式"></a>引入方式</h2><blockquote>
+<p><code>axios</code> 主要针对vue脚手架搭建，直接在命令行中运行</p>
+</blockquote>
+<blockquote>
+<p><code>npm install axios --save</code></p>
+</blockquote>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/05/07/vue之axios的简单封装及使用/axios.png" alt="我的目录结构" title="">
+                </div>
+                <div class="image-caption">我的目录结构</div>
+            </figure>
+<p>在<code>src</code>文件夹下创建一个<code>api</code>文件夹，然后分别创建三个JS文件：<br><code>config.js</code>:用来配置公共参数的文件,<br><code>fetch.js</code>：axios配置参数相关文件,<br><code>index.js</code>：入口文件</p>
+<h2 id="配置详情"><a href="#配置详情" class="headerlink" title="配置详情"></a>配置详情</h2><ul>
+<li>首先配置接口需要的公共参数，在<code>config.js</code>中配置，大致如下：</li>
+</ul>
+<blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> DEV_HOST = <span class="string">'接口域名'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> code = &#123;</span><br><span class="line">   公共参数<span class="number">1</span>: <span class="number">1</span>,</span><br><span class="line">   公共参数<span class="number">2</span>: <span class="number">2</span>,</span><br><span class="line">   公共参数<span class="number">3</span>: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  code: code,</span><br><span class="line">  DEV_HOST: DEV_HOST</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>然后配置axios参数并引入公共参数，在<code>fetch.js</code>中配置，大致如下：</li>
+</ul>
+<blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"><span class="keyword">import</span> qs <span class="keyword">from</span> <span class="string">'qs'</span></span><br><span class="line"><span class="keyword">import</span> &#123; DEV_HOST &#125; <span class="keyword">from</span> <span class="string">'./config'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">  <span class="comment">// 设置默认根地址</span></span><br><span class="line">  baseURL: DEV_HOST,</span><br><span class="line">  <span class="comment">// 设置请求超时设置</span></span><br><span class="line">  timeout: <span class="number">5000</span>,</span><br><span class="line">  <span class="comment">// 设置请求时的header</span></span><br><span class="line">  header: &#123;</span><br><span class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded;charset=UTF-8'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 公用参数</span></span><br><span class="line">  data: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// POST传参序列化</span></span><br><span class="line">instance.interceptors.request.use(<span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">//console.log(config)</span></span><br><span class="line">  <span class="keyword">if</span> (config.method === <span class="string">'post'</span>) &#123;</span><br><span class="line">    config.data = qs.stringify(config.data)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> config</span><br><span class="line">&#125;, (error) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回状态判断</span></span><br><span class="line">instance.interceptors.response.use(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (res.data.code == <span class="number">400</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"接口请求超时或者错误"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;, (error) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">fetch</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    instance(options).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">      resolve(response.data)</span><br><span class="line">    &#125;).catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">      reject(error)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li>最后在入口文件<code>index.js</code>中写好接口地址，供使用时调用,大致如下：</li>
+</ul>
+<blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fetch <span class="keyword">from</span> <span class="string">'./fetch'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//接口1</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> 接口<span class="number">1</span>命名 = <span class="function">(<span class="params">data</span>) =&gt;</span> fetch(&#123; <span class="attr">url</span>: <span class="string">'接口1地址'</span>, <span class="attr">method</span>: <span class="string">'POST'</span>, data &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//接口2</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> 接口<span class="number">2</span>命名 = <span class="function">(<span class="params">data</span>) =&gt;</span> fetch(&#123; <span class="attr">url</span>: <span class="string">'接口2地址'</span>, <span class="attr">method</span>: <span class="string">'POST'</span>, data &#125;);</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ul>
+<li>使用时，在需要调用接口的页面中，调用接口1命名，并在<code>method</code>中调用<code>fetch</code>方法，代码大致如下：</li>
+</ul>
+<blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; 接口<span class="number">1</span>命名 &#125; <span class="keyword">from</span> <span class="string">"@/api"</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      参数<span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    click() &#123;</span><br><span class="line">      接口<span class="number">1</span>命名(参数<span class="number">1</span>).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(res)</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(err)</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这就是我常用的axios的使用方法，用习惯了，就觉得应该来记录一下。其他如果项目简单的话，并不需要在<code>fetch</code>中写那么多的参数。直接调用<code>post</code>及<code>get</code>方法，在<code>fetch</code>中直接全部替换以下代码使用即可：</p>
+<blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  post(url, params) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      instance(&#123;</span><br><span class="line">        method: <span class="string">'post'</span>,</span><br><span class="line">        url,</span><br><span class="line">        data: params,</span><br><span class="line">      &#125;).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">        resolve(response.data)</span><br><span class="line">      &#125;).catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        reject(error)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  get(url, params) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      instance(&#123;</span><br><span class="line">        method: <span class="string">'get'</span>,</span><br><span class="line">        url,</span><br><span class="line">        params: params,</span><br><span class="line">      &#125;).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">        resolve(response.data)</span><br><span class="line">      &#125;).catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        reject(error)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>希望自己的记录对大家有帮助，欢迎指教与参与讨论。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-05-07T07:33:26.394Z" itemprop="dateUpdated">2018-05-07 15:33:26</time>
+</span><br>
+
+
+        
+        此文发自 <a href="https://linyong05.github.io/" target="_blank">番茄の博客</a>，请尊重作者的劳动成果，转发复制请注明出处。<br/>原文：<a href="/2018/05/07/vue之axios的简单封装及使用/" target="_blank" rel="external">https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://linyong05.github.io">
+            <img src="/img/avatar.jpg" alt="LinYong05">
+            LinYong05
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios/">axios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/&title=《vue之axios的简单封装及使用》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/&title=《vue之axios的简单封装及使用》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue之axios的简单封装及使用》 — 番茄の博客&url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">vue之HTML转为PDF并预览的实现与踩坑过程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "lrTitNhEVw1eTYmwd298K65A-gzGzoHsz",
+            appKey: "DsKbKSON9Ut0Q2xeoEQ8TMhv",
+            avatar: "wavatar",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+                <a href="/aboutme" title="关于我" style="border-bottom:none">
+                    <i class="icon icon-2x icon-star"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://github.com/LinYong05" target="_blank" title="Github" style="border-bottom:none">
+                    <i class="icon icon-2x icon-github"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://weibo.com/u/2831334664" target="_blank"  title="Weibo" style="border-bottom:none">
+                    <i class="icon icon-2x icon-weibo"></i>
+                </a>
+            </span>
+        </p>
+    </div>
+    <div class="bottom">
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/&title=《vue之axios的简单封装及使用》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/&title=《vue之axios的简单封装及使用》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue之axios的简单封装及使用》 — 番茄の博客&url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/05/07/vue之axios的简单封装及使用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuklEQVR42u3a227qMBAF0P7/T9PXVi3Jnos5HHXlqYKAvVzJE/b44yO+Hl+ur6/8vOfn/c8+ldzzbPTlCw8PD28w9eshrwe4ZiTTTeaQzxkPDw/vNC+f7vWnrr8nGeUan88ZDw8P73/h5Y+/CTsvNnh4eHjvz8tJ1w/o81ADDw8P71/x8iAgmUq+uc/HWsta8PDw8GJeNVB4h7+P9Pfw8PDwxl31fMPtNc96TbXCbPHw8PAO8PINd9LIT2CTsOPmTjw8PLxVXrL15/HrdassX4IEH5UTPDw8vAO8XhOrOsVeuyuHRSEFHh4e3irvMbiqIUI+h0nJwcPDwzvH67Xt83A2KTPJdr9W6/Dw8PCWePm2O4clhwOqIUXU+sLDw8Nb4k1CgUKEGuAn70b34OHh4a3ydgeuhg6TkDcKO/Dw8PBWedU4IJ9KEj30Fu66aH17Fw8PD+8Yr/rhSXaabPHVb3t6Jx4eHt4BXjVQ6MUQk9JSLSELE8XDw8OLw4jqo3C1ZTUJNaoP3Hh4eHineflGXw1h8yNfSXOrevgADw8P7wSvGhzk61QtJ5Myc5O14OHh4a3yqn32fDl2P9UrM3h4eHinedVwtlcYenFDr3Th4eHhneP1DlGdiH0nkW5UMfDw8PCO8XabTzm7F17c/Kvw8PDwXsjbOiIQTWI1BHnpCQg8PLw/z+uFCHlpSbKQ6qmHmyXAw8PDO8bLm0/VR+Q83i1s93mwgoeHh7fKexSv6mZdPRxQjXdv3sXDw8M7wJvUk96DcnXJeo/peHh4eKd5W8WgerygWmCSwlBYVzw8PLwxrxqnTjpNvdJSXUo8PDy89+FV21eTwLdaBn55HQ8PD+8NeMmEkoGrR7LyHwB4eHh4r+Hlh6vybDg/HDA/mPV0FDw8PLwDvN4P/t6Rqd7jdV42mhceHh5eyvsEZAbkKbJHlO4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

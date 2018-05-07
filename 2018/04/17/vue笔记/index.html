@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>vue笔记 | 番茄の博客 | 利器完不成的工作，钝器常能派上用场。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="vue,笔记">
+    <meta name="description" content="前言这是我第一次学习vue时整理的一些简单的笔记。同时也是我建立这个个人博客的第一篇文章。借此分享也便以后查阅，欢迎纠正与指导。 vue目录结构说明1.build: 项目构建webpack相关代码。 2.config: 配置目录，包括端口号等。 3.node_modules: npm加载的项目依赖模块。 4.src: 这里是我们要开发的目录，基本上要做的事情都在这个目录里。 5.static: 静">
+<meta name="keywords" content="vue,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue笔记">
+<meta property="og:url" content="https://linyong05.github.io/2018/04/17/vue笔记/index.html">
+<meta property="og:site_name" content="番茄の博客">
+<meta property="og:description" content="前言这是我第一次学习vue时整理的一些简单的笔记。同时也是我建立这个个人博客的第一篇文章。借此分享也便以后查阅，欢迎纠正与指导。 vue目录结构说明1.build: 项目构建webpack相关代码。 2.config: 配置目录，包括端口号等。 3.node_modules: npm加载的项目依赖模块。 4.src: 这里是我们要开发的目录，基本上要做的事情都在这个目录里。 5.static: 静">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-17T08:30:05.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue笔记">
+<meta name="twitter:description" content="前言这是我第一次学习vue时整理的一些简单的笔记。同时也是我建立这个个人博客的第一篇文章。借此分享也便以后查阅，欢迎纠正与指导。 vue目录结构说明1.build: 项目构建webpack相关代码。 2.config: 配置目录，包括端口号等。 3.node_modules: npm加载的项目依赖模块。 4.src: 这里是我们要开发的目录，基本上要做的事情都在这个目录里。 5.static: 静">
+    
+        <link rel="alternate" type="application/atom+xml" title="番茄の博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">LinYong05</h5>
+          <a href="mailto:715407669@qq.com" title="715407669@qq.com" class="mail">715407669@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/LinYong05" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2831334664" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                微博
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/aboutme"  >
+                <i class="icon icon-lg icon-id-badge"></i>
+                关于我
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">vue笔记</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">vue笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-17T02:58:44.000Z" itemprop="datePublished" class="page-time">
+  2018-04-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习/">学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue目录结构说明"><span class="post-toc-number">2.</span> <span class="post-toc-text">vue目录结构说明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue重要的指令"><span class="post-toc-number">3.</span> <span class="post-toc-text">vue重要的指令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue对象属性说明"><span class="post-toc-number">4.</span> <span class="post-toc-text">vue对象属性说明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vuex状态管理"><span class="post-toc-number">5.</span> <span class="post-toc-text">vuex状态管理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue学习过程中一些其他技巧或插件"><span class="post-toc-number">6.</span> <span class="post-toc-text">vue学习过程中一些其他技巧或插件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自定义路径别名"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">自定义路径别名</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tag转换制定标签类型"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">tag转换制定标签类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#路由器技巧"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">路由器技巧</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#相关"><span class="post-toc-number">6.4.</span> <span class="post-toc-text">相关</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-vue笔记"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">vue笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-17 10:58:44" datetime="2018-04-17T02:58:44.000Z"  itemprop="datePublished">2018-04-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习/">学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我第一次学习vue时整理的一些简单的笔记。同时也是我建立这个个人博客的第一篇文章。借此分享也便以后查阅，欢迎纠正与指导。</p>
+<h2 id="vue目录结构说明"><a href="#vue目录结构说明" class="headerlink" title="vue目录结构说明"></a>vue目录结构说明</h2><p><code>1.build:</code> 项目构建webpack相关代码。</p>
+<p><code>2.config:</code> 配置目录，包括端口号等。</p>
+<p><code>3.node_modules:</code> npm加载的项目依赖模块。</p>
+<p><code>4.src:</code> 这里是我们要开发的目录，基本上要做的事情都在这个目录里。</p>
+<p><code>5.static:</code> 静态资源目录:如图片、字体等。</p>
+<p><code>6.package.json:</code> 项目配置文件，这个用于控制项目的依赖。使用npm加载依赖时，会按照这个文件里描述的依赖及版本进行下载。</p>
+<p><code>7.index.html:</code> 项目入口文件</p>
+<p><code>8.static/.gitkeep:</code> 这个文件保证这个文件夹在上传到github的时候会始终存在。因为github本身会忽略掉空文件夹。</p>
+<p><code>9..babelrc:</code> babel语法编译器的编译配置</p>
+<p><code>10..eslintignore:</code> 忽略语法检查的目录</p>
+<p><code>11.eslintrc.js:</code> 语法检查eslint的配置文件</p>
+<p><code>12.gitignore:</code> 配置一些不需要上传到github的文件或者目录</p>
+<p><code>13.README.md:</code> 项目的描述文件</p>
+<h2 id="vue重要的指令"><a href="#vue重要的指令" class="headerlink" title="vue重要的指令"></a>vue重要的指令</h2><p>vue对象里的设置通过html指令进行关联</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">v-text:    渲染字符串文本数据</span><br><span class="line">v-html:    渲染普通的html代码插入</span><br><span class="line">v-show:    切换元素的display属性（显示/隐藏）</span><br><span class="line">v-if:      按条件渲染~（条件未满足时代码不存在前端页面）</span><br><span class="line">v-else:    前一兄弟元素必须有 v-if 或 v-else-if</span><br><span class="line">v-else-if: 前一兄弟元素必须有 v-if 或 v-else-if</span><br><span class="line">v-for:     循环渲染，有相同父元素的子元素最好加个独特的 key</span><br><span class="line">v-on:      绑定事件，缩写 @ </span><br><span class="line">v-bind:    动态地绑定一个或多个特性（src、class、style等），缩写 :</span><br><span class="line">v-model:   表单控件或组建上创建双向绑定</span><br><span class="line">v-pre:     跳过这个元素和它的子元素的编译过程</span><br><span class="line">v-cloak:   这个指令保持在元素上直到关联实例结束编译，防止闪烁</span><br><span class="line">v-once:    只渲染元素和组件一次，随后的重新渲染将跳过，这可以用于优化更新性能。</span><br></pre></td></tr></table></figure>
+<h2 id="vue对象属性说明"><a href="#vue对象属性说明" class="headerlink" title="vue对象属性说明"></a>vue对象属性说明</h2><p>new 一个vue对象的时候你可以设置它的属性，其中最重要的包括三个，分别是data、methods、watch.</p>
+<blockquote>
+<ul>
+<li><code>data</code>代表vue对象的数据</li>
+<li><code>methods</code>代表vue对象的方法</li>
+<li><code>watch</code>设置了对象监听的方法</li>
+<li><code>mounted</code>页面初始化默认方法,$el挂载到实例上去之后调用该钩子</li>
+<li><code>computed</code>实时计算</li>
+<li><code>created</code>在实例创建完成后被立即调用,挂载阶段还没开始，$el 属性目前不可见。</li>
+</ul>
+</blockquote>
+<h2 id="vuex状态管理"><a href="#vuex状态管理" class="headerlink" title="vuex状态管理"></a>vuex状态管理</h2><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。<br>目录结构：<br>store:<br>&nbsp;&nbsp;&nbsp;&nbsp;1.action.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;异步修改操作<br>&nbsp;&nbsp;&nbsp;&nbsp;2.getters.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第四步：取数据到组件<br>&nbsp;&nbsp;&nbsp;&nbsp;3.index.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;入口文件<br>&nbsp;&nbsp;&nbsp;&nbsp;4.mutation-type.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第二步：设置常量方法<br>&nbsp;&nbsp;&nbsp;&nbsp;5.mutation.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三步：定义修改操作<br>&nbsp;&nbsp;&nbsp;&nbsp;6.state.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一步：定义状态树</p>
+<h2 id="vue学习过程中一些其他技巧或插件"><a href="#vue学习过程中一些其他技巧或插件" class="headerlink" title="vue学习过程中一些其他技巧或插件"></a>vue学习过程中一些其他技巧或插件</h2><h3 id="自定义路径别名"><a href="#自定义路径别名" class="headerlink" title="自定义路径别名"></a>自定义路径别名</h3><p>在buidl文件夹下找到webpack.base.config.js文件根据自己需求修改</p>
+<blockquote>
+<p>resolve:{<br>&nbsp;&nbsp;&nbsp;&nbsp;extensions: [‘.js’, ‘.vue’, ‘.json’],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alias: {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;’vue$’: ‘vue/dist/vue.esm.js’,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;‘@’: resolve(‘src’),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;’common’: resolve(‘src/common’),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;’components’: resolve(‘src/components’),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;’base’: resolve(‘src/base’),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;’api’: resolve(‘src/api’)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</p>
+</blockquote>
+<h3 id="tag转换制定标签类型"><a href="#tag转换制定标签类型" class="headerlink" title="tag转换制定标签类型"></a>tag转换制定标签类型</h3><blockquote>
+<p><code>&lt;router-link tag=&quot;div&quot; to=&quot;/xxx&quot;&gt;</code></p>
+</blockquote>
+<p>将默认为a标签的路由导航指派为div。</p>
+<h3 id="路由器技巧"><a href="#路由器技巧" class="headerlink" title="路由器技巧"></a>路由器技巧</h3><p>运行项目时需要默认打开某个路由指向时，可设置</p>
+<blockquote>
+<p>{<br>&nbsp;&nbsp;&nbsp;&nbsp;path: ‘/‘,<br>&nbsp;&nbsp;&nbsp;&nbsp;redirect: ‘/index’<br>}</p>
+</blockquote>
+<h3 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h3><ul>
+<li>vue组件之间的调用另一个重要选项<code>components</code></li>
+<li>vue组件之间的通信<code>props</code></li>
+<li>功能模块：select、pagenation……</li>
+<li>页面区域：header、footer、sidebar……</li>
+<li>class首字母大写（compenents）</li>
+<li><code>&lt;solt&gt;&lt;/solt&gt;</code>vue的一个插槽</li>
+<li><code>activated</code> <code>keep-alive</code>组件激活时调用。当引入<code>keep-alive</code>的时候，页面第一次进入，钩子的出发顺序<code>created</code> &gt; <code>mounted</code> &gt; <code>activated</code>,退出时触发<code>deactivated</code>。当再次进入（前进或者后退）时，只触发<code>activated</code>。<code>keep-alive</code>只有当数据变化时，才使用更新。故，页面进入的数据获取应该在activated中也放一份。数据下载完毕手动操作DOM的部分也应该在activated中执行才会生效。</li>
+<li>样式：<br>flex布局 align-items:center 垂直居中<br>flex纵向排列 flex-direction:column;justify-content:center 纵向居中</li>
+<li>图片懒加载：<a href="https://www.npmjs.com/package/vue-lazyload" target="_blank" rel="noopener">vue-lazyload</a></li>
+<li>引用本地资源 <code>require(&#39;xxx.png&#39;)</code></li>
+<li><code>$el</code> 非dom操作时添加进行修改</li>
+<li>vue内置组件<code>transition-group</code>：作为多个元素/组件的过渡效果，使用时需要一个动画名称<code>name=&quot;list&quot;</code>，默认渲染<code>&lt;span&gt;</code>，可以通过 <code>tag</code> 属性配置哪个元素应该被渲染。渲染成<code>ul</code>时要求<code>li</code>有<code>:key=&quot;item.id&quot;</code>。高度从50px变成0的效果：<blockquote>
+<p>.list-enter-active, .list-leave-active{<br>&nbsp;&nbsp;&nbsp;&nbsp;transition: all 0.1s<br>}<br>.list-enter, .list-leave-to{<br>&nbsp;&nbsp;&nbsp;&nbsp;height: 0<br>}</p>
+</blockquote>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-17T08:30:05.523Z" itemprop="dateUpdated">2018-04-17 16:30:05</time>
+</span><br>
+
+
+        
+        此文发自 <a href="https://linyong05.github.io/" target="_blank">番茄の博客</a>，请尊重作者的劳动成果，转发复制请注明出处。<br/>原文：<a href="/2018/04/17/vue笔记/" target="_blank" rel="external">https://linyong05.github.io/2018/04/17/vue笔记/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://linyong05.github.io">
+            <img src="/img/avatar.jpg" alt="LinYong05">
+            LinYong05
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/04/17/vue笔记/&title=《vue笔记》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/04/17/vue笔记/&title=《vue笔记》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/04/17/vue笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue笔记》 — 番茄の博客&url=https://linyong05.github.io/2018/04/17/vue笔记/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/04/17/vue笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/04/18/TomatoMusic/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Tomato Music——移动端音乐 WebApp</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "lrTitNhEVw1eTYmwd298K65A-gzGzoHsz",
+            appKey: "DsKbKSON9Ut0Q2xeoEQ8TMhv",
+            avatar: "wavatar",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+                <a href="/aboutme" title="关于我" style="border-bottom:none">
+                    <i class="icon icon-2x icon-star"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://github.com/LinYong05" target="_blank" title="Github" style="border-bottom:none">
+                    <i class="icon icon-2x icon-github"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://weibo.com/u/2831334664" target="_blank"  title="Weibo" style="border-bottom:none">
+                    <i class="icon icon-2x icon-weibo"></i>
+                </a>
+            </span>
+        </p>
+    </div>
+    <div class="bottom">
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/04/17/vue笔记/&title=《vue笔记》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/04/17/vue笔记/&title=《vue笔记》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/04/17/vue笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《vue笔记》 — 番茄の博客&url=https://linyong05.github.io/2018/04/17/vue笔记/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/04/17/vue笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3awW6EMAxFUf7/p6dSV5WmZO6zYSScywoxheRk4caOjwNfr9/r7PnfX9+frP/+/fnZuxdcMmTIeCzjtbzWjLNfybTO8Ovnp9+UIUPGBgwyTH+KHM/nJkOGDBm1LR25J6PIkCFDRifgdqjrkC1DhgwZnSS2VkpLQ/ntubgMGTIeyEgPBr55f+P5hgwZMh7CeDUuPiQPoMWZyJAhYzQj3dLxxgvShJFuND/MUIYMGUMZaVmfN3jxzSVfiNNvypAhYwMGL3ulR5I8EPNjhn9GkSFDxmhGrWbVOdSslfWDt2TIkDGaUWvhIgW1TtgtHmTKkCFjHGPtW3+UD5ymwWnxToYMGVMZfMtVS2LJAvGtpAwZMnZmtKI1pvJJpxtTGTJk7MDgAfeOxJV3hZx+TYYMGaMZtZdbPWilZjLUriFDhoyhDAIgz4M1axT4jnSiMmTIGMTgJTN+VHB3W5gMGTL2YZAUNE4mw+aJDluGDBn7MK7C8IYJHnzTRg0ZMmRMZfBklSe0pC0sPVQ40qnIkCFjHKNT9K8txFVLIEOGjB0YfEJpY0Tt2KD270GGDBlTGbVUM01o01Q5TnFlyJAxmnFVtCZbw2uDdTFky5Ah47GMtGRfq3p1jjCPdGAZMmQMZfDAxzNHXlyrLbcMGTJkdMpknQSVvyVDhgwZ6/IWv++8GwRoGTJkbMAgSSzfzKXfId//MK4MGTJGM9JaVpqsrhfrS8U4GTJkPJXxA7Lak2Fd0DTcAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

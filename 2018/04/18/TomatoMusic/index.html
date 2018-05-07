@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Tomato Music——移动端音乐 WebApp | 番茄の博客 | 利器完不成的工作，钝器常能派上用场。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="vue">
+    <meta name="description" content="Tomato Music——移动端音乐 WebApp👉 github: https://github.com/LinYong05/vue-music-webapp 👉  项目演示地址(接口可能会因为QQ音乐变动导致数据获取失败): https://linyong05.github.io/vue-music-webapp/dist/#/recommend （在 GitHub Pages 中，通过">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomato Music——移动端音乐 WebApp">
+<meta property="og:url" content="https://linyong05.github.io/2018/04/18/TomatoMusic/index.html">
+<meta property="og:site_name" content="番茄の博客">
+<meta property="og:description" content="Tomato Music——移动端音乐 WebApp👉 github: https://github.com/LinYong05/vue-music-webapp 👉  项目演示地址(接口可能会因为QQ音乐变动导致数据获取失败): https://linyong05.github.io/vue-music-webapp/dist/#/recommend （在 GitHub Pages 中，通过">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-18T07:18:49.483Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomato Music——移动端音乐 WebApp">
+<meta name="twitter:description" content="Tomato Music——移动端音乐 WebApp👉 github: https://github.com/LinYong05/vue-music-webapp 👉  项目演示地址(接口可能会因为QQ音乐变动导致数据获取失败): https://linyong05.github.io/vue-music-webapp/dist/#/recommend （在 GitHub Pages 中，通过">
+    
+        <link rel="alternate" type="application/atom+xml" title="番茄の博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">LinYong05</h5>
+          <a href="mailto:715407669@qq.com" title="715407669@qq.com" class="mail">715407669@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/LinYong05" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/2831334664" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                微博
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/aboutme"  >
+                <i class="icon icon-lg icon-id-badge"></i>
+                关于我
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Tomato Music——移动端音乐 WebApp</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Tomato Music——移动端音乐 WebApp</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-18T07:11:41.000Z" itemprop="datePublished" class="page-time">
+  2018-04-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/练习/">练习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tomato-Music——移动端音乐-WebApp"><span class="post-toc-number">1.</span> <span class="post-toc-text">Tomato Music——移动端音乐 WebApp</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术储备要求"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">技术储备要求</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#学习知识点（前端）"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">学习知识点（前端）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#学习知识点（后端）"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">学习知识点（后端）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#收获"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">收获</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-TomatoMusic"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Tomato Music——移动端音乐 WebApp</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-18 15:11:41" datetime="2018-04-18T07:11:41.000Z"  itemprop="datePublished">2018-04-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/练习/">练习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Tomato-Music——移动端音乐-WebApp"><a href="#Tomato-Music——移动端音乐-WebApp" class="headerlink" title="Tomato Music——移动端音乐 WebApp"></a>Tomato Music——移动端音乐 WebApp</h1><p>👉 github: <a href="https://github.com/LinYong05/vue-music-webapp" target="_blank" rel="noopener">https://github.com/LinYong05/vue-music-webapp</a></p>
+<p>👉  项目演示地址(接口可能会因为QQ音乐变动导致数据获取失败): <a href="https://linyong05.github.io/vue-music-webapp/dist/#/recommend">https://linyong05.github.io/vue-music-webapp/dist/#/recommend</a> （在 GitHub Pages 中，通过 jsonp 请求的数据会被正常渲染，而由于无 node 服务，通过 axios 请求的数据不会被正常渲染,最主要表现为首页推荐列表、歌词加载不来。）</p>
+<p>基于 <strong>Vue 全家桶 (2.x)</strong> 制作的移动端音乐 WebApp ，一个媲美原生的移动端音乐App项目，功能完备，UI美观，交互一流</p>
+<h2 id="技术储备要求"><a href="#技术储备要求" class="headerlink" title="技术储备要求"></a>技术储备要求</h2><ul>
+<li>1、精通HTML、 CSS和JavaScript编程</li>
+<li>2、有了一定Vue.js 基础和Vue.js的实际开发经验</li>
+<li>3、已经具备Node.js、npm和webpack的使用经验</li>
+</ul>
+<h2 id="学习知识点（前端）"><a href="#学习知识点（前端）" class="headerlink" title="学习知识点（前端）"></a>学习知识点（前端）</h2><ul>
+<li><code>Vue</code>：数据绑定及全新的逻辑体验</li>
+<li><code>vue-router</code>：为单页面应用提供的路由系统</li>
+<li><code>vuex</code>：Vue 集中状态管理，有点像临时共享仓库</li>
+<li><code>vue-lazyload</code>：第三方图片懒加载库，优化页面加载速度</li>
+<li><code>better-scroll</code>：滚动插件</li>
+<li><code>ES6</code>：ECMAScript 新一代语法，模块化、解构赋值、Promise、Class 是新的知识点</li>
+</ul>
+<h2 id="学习知识点（后端）"><a href="#学习知识点（后端）" class="headerlink" title="学习知识点（后端）"></a>学习知识点（后端）</h2><ul>
+<li><code>Node.js</code>：本地测试服务器，基于node.js开发vue项目</li>
+<li><code>jsonp</code>：服务端数据通讯。抓取 QQ音乐(移动端)数据来实现音乐的数据的获取</li>
+<li><code>axios</code>：服务端数据请求。结合 Node.js 代理后端请求，抓取 QQ音乐(PC端)数据</li>
+</ul>
+<h2 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h2><ol>
+<li>收获了一套 Vue 通用组件，可以在其它项目中复用的 10+ 个基础组件、15+ 个业务组件</li>
+<li>收获了一套常用的 SCSS mixin 库</li>
+<li>体会到组件化、模块化开发带来的便捷</li>
+<li>体会到将对象封装成类(ES6 class) 的便捷性，以及利用工厂方式初始化类实例</li>
+<li>学会利用 <code>js</code> 编写过渡效果及动画效果制作良好的用户交互体验</li>
+<li>学会了vue开发思想逻辑</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-04-18T07:18:49.483Z" itemprop="dateUpdated">2018-04-18 15:18:49</time>
+</span><br>
+
+
+        
+        此文发自 <a href="https://linyong05.github.io/" target="_blank">番茄の博客</a>，请尊重作者的劳动成果，转发复制请注明出处。<br/>原文：<a href="/2018/04/18/TomatoMusic/" target="_blank" rel="external">https://linyong05.github.io/2018/04/18/TomatoMusic/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://linyong05.github.io">
+            <img src="/img/avatar.jpg" alt="LinYong05">
+            LinYong05
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/04/18/TomatoMusic/&title=《Tomato Music——移动端音乐 WebApp》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/04/18/TomatoMusic/&title=《Tomato Music——移动端音乐 WebApp》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/04/18/TomatoMusic/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Tomato Music——移动端音乐 WebApp》 — 番茄の博客&url=https://linyong05.github.io/2018/04/18/TomatoMusic/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/04/18/TomatoMusic/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/04/23/vue之HTML转为PDF并预览的实现与踩坑过程/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">vue之HTML转为PDF并预览的实现与踩坑过程</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/17/vue笔记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">vue笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "lrTitNhEVw1eTYmwd298K65A-gzGzoHsz",
+            appKey: "DsKbKSON9Ut0Q2xeoEQ8TMhv",
+            avatar: "wavatar",
+            placeholder: "ヾﾉ≧∀≦)o来啊，快活啊!",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+                <a href="/aboutme" title="关于我" style="border-bottom:none">
+                    <i class="icon icon-2x icon-star"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://github.com/LinYong05" target="_blank" title="Github" style="border-bottom:none">
+                    <i class="icon icon-2x icon-github"></i>
+                </a>
+            </span>
+            <span>
+                <a href="https://weibo.com/u/2831334664" target="_blank"  title="Weibo" style="border-bottom:none">
+                    <i class="icon icon-2x icon-weibo"></i>
+                </a>
+            </span>
+        </p>
+    </div>
+    <div class="bottom">
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://linyong05.github.io/2018/04/18/TomatoMusic/&title=《Tomato Music——移动端音乐 WebApp》 — 番茄の博客&pic=https://linyong05.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://linyong05.github.io/2018/04/18/TomatoMusic/&title=《Tomato Music——移动端音乐 WebApp》 — 番茄の博客&source=做自己爱做的事，爱自己在做的事！记录自己所想，想自己所做！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <!-- <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://linyong05.github.io/2018/04/18/TomatoMusic/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Tomato Music——移动端音乐 WebApp》 — 番茄の博客&url=https://linyong05.github.io/2018/04/18/TomatoMusic/&via=https://linyong05.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://linyong05.github.io/2018/04/18/TomatoMusic/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li> -->
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3ay07DMBAF0P7/TxeJLaTcOw6Vah+vUBQ5Pl0MnsfjEa/n9/r55Or51TtXT17vedvCwMD4WMbz5bp6J0cmx8q/e7knBgbGAYzXQTZH5nvmITjZBwMDA6MNsushFQMDA2OF0aap67thYGBg5ElsWyCbHevfc3EMDIwPZLSNgXf+/Y/9DQwMjA9hPMs126E9XH0qDAyMrRlJIawdv2iblCvIop6HgYHxsYw2Xbz3/TZ9vcRgYGAcw0jKZCtBdj1MX/IwMDCOYdxVCGuTzwQZdTYwMDC2ZqyU1WZHWQ/QUdUQAwNjC0ZSPsuLcXkKmnwxSX0xMDBOYBTKICAmCWr+rWLsAwMD4xjG7Kq3cqA8SY7KbRgYGEcy8oZlu8O9F1AMDIwTGCuXvzw4tsNhRRqMgYGxNaMdemjT0dk7K+NiGBgYuzLaz7eNxnw4Y3YxxcDAOIcxC7htI6EtwBXlOQwMjK0Z7XRGe2l757gGBgbGfoy7ymF103Eh+NYzIxgYGAcw/kgdy7CbX/6G/yswMDC2Y8yGtGZF/1nKOkyJMTAwNmI8y5UnsclRZsnwL9/CwMDYmrFerG8bmbOfpm1IYGBg7MfIg+z6h9thi2LIAwMD4wBGHkzbUtqwp9omvRgYGBjxjTJpIeRthmJ/DAwMjPi6llz78nGK4mfFwMA4gJEnsUnJbNYSWElxMTAw9ma0qWMeRmcDGW3hDwMDY2vGF9dEhJp7vZzBAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
