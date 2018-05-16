@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="番茄の博客">
 <meta property="og:description" content="前言这是我第一次学习vue时整理的一些简单的笔记。同时也是我建立这个个人博客的第一篇文章。借此分享也便以后查阅，欢迎纠正与指导。 vue目录结构说明1.build: 项目构建webpack相关代码。 2.config: 配置目录，包括端口号等。 3.node_modules: npm加载的项目依赖模块。 4.src: 这里是我们要开发的目录，基本上要做的事情都在这个目录里。 5.static: 静">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-17T08:30:05.523Z">
+<meta property="og:updated_time" content="2018-05-16T06:47:04.357Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue笔记">
 <meta name="twitter:description" content="前言这是我第一次学习vue时整理的一些简单的笔记。同时也是我建立这个个人博客的第一篇文章。借此分享也便以后查阅，欢迎纠正与指导。 vue目录结构说明1.build: 项目构建webpack相关代码。 2.config: 配置目录，包括端口号等。 3.node_modules: npm加载的项目依赖模块。 4.src: 这里是我们要开发的目录，基本上要做的事情都在这个目录里。 5.static: 静">
@@ -215,7 +215,7 @@
 <p><code>12.gitignore:</code> 配置一些不需要上传到github的文件或者目录</p>
 <p><code>13.README.md:</code> 项目的描述文件</p>
 <h2 id="vue重要的指令"><a href="#vue重要的指令" class="headerlink" title="vue重要的指令"></a>vue重要的指令</h2><p>vue对象里的设置通过html指令进行关联</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">v-text:    渲染字符串文本数据</span><br><span class="line">v-html:    渲染普通的html代码插入</span><br><span class="line">v-show:    切换元素的display属性（显示/隐藏）</span><br><span class="line">v-if:      按条件渲染~（条件未满足时代码不存在前端页面）</span><br><span class="line">v-else:    前一兄弟元素必须有 v-if 或 v-else-if</span><br><span class="line">v-else-if: 前一兄弟元素必须有 v-if 或 v-else-if</span><br><span class="line">v-for:     循环渲染，有相同父元素的子元素最好加个独特的 key</span><br><span class="line">v-on:      绑定事件，缩写 @ </span><br><span class="line">v-bind:    动态地绑定一个或多个特性（src、class、style等），缩写 :</span><br><span class="line">v-model:   表单控件或组建上创建双向绑定</span><br><span class="line">v-pre:     跳过这个元素和它的子元素的编译过程</span><br><span class="line">v-cloak:   这个指令保持在元素上直到关联实例结束编译，防止闪烁</span><br><span class="line">v-once:    只渲染元素和组件一次，随后的重新渲染将跳过，这可以用于优化更新性能。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">v-text:    渲染字符串文本数据</span><br><span class="line">v-html:    渲染普通的html代码插入</span><br><span class="line">v-show:    切换元素的display属性（显示/隐藏）</span><br><span class="line">v-if:      按条件渲染~（删除页面中的代码/插入一段代码）</span><br><span class="line">v-else:    前一兄弟元素必须有 v-if 或 v-else-if</span><br><span class="line">v-else-if: 前一兄弟元素必须有 v-if 或 v-else-if</span><br><span class="line">v-for:     循环渲染，有相同父元素的子元素最好加个独特的 key</span><br><span class="line">v-on:      绑定事件，缩写 @ </span><br><span class="line">v-bind:    动态地绑定一个或多个特性（src、class、style等），缩写 :</span><br><span class="line">v-model:   表单控件或组建上创建双向绑定</span><br><span class="line">v-pre:     跳过这个元素和它的子元素的编译过程</span><br><span class="line">v-cloak:   这个指令保持在元素上直到关联实例结束编译，防止闪烁</span><br><span class="line">v-once:    只渲染元素和组件一次，随后的重新渲染将跳过，这可以用于优化更新性能。</span><br></pre></td></tr></table></figure>
 <h2 id="vue对象属性说明"><a href="#vue对象属性说明" class="headerlink" title="vue对象属性说明"></a>vue对象属性说明</h2><p>new 一个vue对象的时候你可以设置它的属性，其中最重要的包括三个，分别是data、methods、watch.</p>
 <blockquote>
 <ul>
@@ -265,7 +265,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-17T08:30:05.523Z" itemprop="dateUpdated">2018-04-17 16:30:05</time>
+    最后更新时间：<time datetime="2018-05-16T06:47:04.357Z" itemprop="dateUpdated">2018-05-16 14:47:04</time>
 </span><br>
 
 
